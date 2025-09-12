@@ -51,6 +51,16 @@ M.setup = function(input)
         ::header_replaced::
       end
     end
+
+    -- check for search stop files
+    for _, sfile_path in ipairs(config.search_stop) do
+      sfile = io.open(sfile_path)
+      if io.type(sfile) ~= nil then
+        sfile:close()
+        goto stop_file_search
+      end
+    end
+
   end
   ::stop_file_search::
 
