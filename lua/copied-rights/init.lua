@@ -7,15 +7,11 @@ local util = require("copied-rights/util")
 local clean_file_name = util.clean_file_name
 local diff_string = util.diff_string
 
-local config = {
-  headers = {},
-  search_stop = { ".git/" },
-  max_search = 4
-}
+local config = require("copied-rights/config")
 
 -- debug function for printing all headers
 M.debug = function()
-  for _, header in ipairs(config.headers) do
+  for _, header in ipairs(config.get().headers) do
     print("file: " .. header.file)
     for _, line in ipairs(header.lines) do
       print(line)
@@ -46,7 +42,8 @@ function add_header(header)
     goto exception
   end
 
-  table.insert(config.headers, header)
+  config.insert_header(header)
+
   ::exception::
 end
 
@@ -55,11 +52,11 @@ M.setup = function(input)
   if input.headers ~= nil then
     for _, header in ipairs(input.headers) do add_header(header) end
   end
-  if input.search_stop ~= nil then config.search_stop = input.search_stop end
-  if input.max_search ~= nil then config.max_search = input.max_search end
+  if input.search_stop ~= nil then config.set_search_stop(input.search_stop) end
+  if input.max_search ~= nil then config.set_max_search(input.max_search) end
 
   local file_path = ".copied-rights.lua"
-  for search_depth = 0, config.max_search do
+  for search_depth = 0, config.get().max_search do
     file = io.open(file_path)
     if io.type(file) == nil then
       -- if file is not in this directory, go back one
@@ -72,7 +69,7 @@ M.setup = function(input)
       -- replaces a header if the file type is the same
       -- otherwise, inserts at end
       for _, i in ipairs(file_input) do
-        for ji, j in ipairs(config.headers) do
+        for ji, j in ipairs(config.get().headers) do
 
           -- without a file type, it is invalid
           if i.file == nil then
@@ -84,7 +81,7 @@ M.setup = function(input)
           i.file = clean_file_name(i.file)
 
           if i.file == j.file then
-            table.remove(config.headers, ji)
+            config.remove_header(ji)
             add_header(i)
             goto header_replaced
           end
@@ -95,7 +92,7 @@ M.setup = function(input)
     end
 
     -- check for search stop files
-    for _, sfile_path in ipairs(config.search_stop) do
+    for _, sfile_path in ipairs(config.get().search_stop) do
       sfile = io.open(sfile_path)
       if io.type(sfile) ~= nil then
         sfile:close()
