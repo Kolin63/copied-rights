@@ -5,13 +5,6 @@ local M = {}
 
 local config = require("copied-rights/config")
 
--- removes any extra syntax from file name
-M.clean_file_name = function(file)
-  if file:sub(1, 1) == "*" then file = file:sub(2) end
-  if file:sub(1, 1) == "." then file = file:sub(2) end
-  return file
-end
-
 -- returns an int of how many characters are different between two strings
 M.diff_string = function(x, y)
   local diff_count = 0
