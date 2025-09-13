@@ -5,6 +5,7 @@ local M = {}
 
 local util = require("copied-rights/util")
 local clean_file_name = util.clean_file_name
+local diff_string = util.diff_string
 
 local config = {
   headers = {},
