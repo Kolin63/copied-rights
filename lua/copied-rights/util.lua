@@ -25,7 +25,17 @@ end
 
 -- debug function for printing all headers
 M.debug = function()
-  for _, header in ipairs(config.get().headers) do
+  local c = config.get()
+
+  print("search stops:")
+  for _, ss in ipairs(c.search_stop) do
+    print(ss)
+  end
+  print("\n")
+
+  print("max search: " .. c.max_search .. "\n\n")
+
+  for _, header in ipairs(c.headers) do
     print("file: " .. header.file)
     for _, line in ipairs(header.lines) do
       print(line)
