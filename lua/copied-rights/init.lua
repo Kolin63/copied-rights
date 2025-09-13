@@ -3,6 +3,9 @@
 
 local M = {}
 
+local util = require("copied-rights/util")
+local clean_file_name = util.clean_file_name
+
 local config = {
   headers = {},
   search_stop = { ".git/" },
@@ -18,14 +21,6 @@ M.debug = function()
     end
     print("\n")
   end
-end
-
--- removes any extra syntax from file name
--- ex: *.c -> c
-function clean_file_name(file)
-  if file:sub(1, 1) == "*" then file = file:sub(2) end
-  if file:sub(1, 1) == "." then file = file:sub(2) end
-  return file
 end
 
 -- neatly adds header to config
