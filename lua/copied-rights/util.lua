@@ -1,3 +1,6 @@
+-- SPDX-License-Identifier: MIT
+-- Copyright (c) Colin Melican 2025
+
 local M = {}
 
 -- removes any extra syntax from file name
