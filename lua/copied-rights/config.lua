@@ -6,7 +6,8 @@ local M = {}
 local config = {
   headers = {},
   search_stop = { ".git/" },
-  max_search = 4
+  max_search = 4,
+  max_diff = 4,
 }
 
 M.get = function() return config end
