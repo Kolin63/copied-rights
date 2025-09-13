@@ -3,6 +3,8 @@
 
 local M = {}
 
+local config = require("copied-rights/config")
+
 -- removes any extra syntax from file name
 M.clean_file_name = function(file)
   if file:sub(1, 1) == "*" then file = file:sub(2) end
@@ -19,6 +21,17 @@ M.diff_string = function(x, y)
     end
   end
   return diff_count
+end
+
+-- debug function for printing all headers
+M.debug = function()
+  for _, header in ipairs(config.get().headers) do
+    print("file: " .. header.file)
+    for _, line in ipairs(header.lines) do
+      print(line)
+    end
+    print("\n")
+  end
 end
 
 return M

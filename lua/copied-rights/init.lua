@@ -9,17 +9,6 @@ local diff_string = util.diff_string
 
 local config = require("copied-rights/config")
 
--- debug function for printing all headers
-M.debug = function()
-  for _, header in ipairs(config.get().headers) do
-    print("file: " .. header.file)
-    for _, line in ipairs(header.lines) do
-      print(line)
-    end
-    print("\n")
-  end
-end
-
 -- neatly adds header to config
 -- does not check for file type conflicts
 function add_header(header)
@@ -103,7 +92,7 @@ M.setup = function(input)
   end
   ::stop_file_search::
 
-  M.debug()
+  util.debug()
 
 end
 
