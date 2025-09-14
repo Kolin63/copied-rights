@@ -40,7 +40,7 @@ M.add_header = function(header, fast)
   -- remove conflicting file types
   if fast then goto conflict_resolved end
   for idx, i in ipairs(config.headers) do
-    if header.file == i.file then
+    if header.file == i.file and header.command == i.command then
       table.remove(config.headers, idx)
       goto conflict_resolved
     end
