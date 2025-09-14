@@ -50,7 +50,8 @@ M.setup = function(input)
     local insert = require("copied-rights/header").insert
     if #args.fargs == 0 then
       insert(util.get_extension(vim.api.nvim_buf_get_name(0)))
-      -- TODO: add support for commands
+    else
+      insert(args.fargs[1])
     end
   end, { nargs = '?' })
 
