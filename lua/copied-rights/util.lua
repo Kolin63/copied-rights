@@ -5,6 +5,17 @@ local M = {}
 
 local config = require("copied-rights/config")
 
+-- returns file name extension given file name
+-- ex: file.abc.vim will return vim
+M.get_extension = function(file)
+  ext = ""
+  while file:sub(#file, #file) ~= "." do
+    ext = file:sub(#file, #file) .. ext
+    file = file:sub(1, #file - 1)
+  end
+  return ext
+end
+
 -- debug function for printing all headers
 M.debug = function()
   local c = config.get()
