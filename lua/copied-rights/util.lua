@@ -5,18 +5,55 @@ local M = {}
 
 local config = require("copied-rights/config")
 
--- returns file name extension given file name
--- ex: file.abc.vim will return vim
-M.get_extension = function(file)
-  ext = ""
-  while #file > 0 do
-    ext = file:sub(#file, #file) .. ext
-    file = file:sub(1, #file - 1)
-    if file:sub(#file, #file) == "." then
-      return ext
-    end
+-- returns file name given path
+-- ex: /home/colin/.vimrc will return .vimrc
+M.get_file_name = function(path)
+  file = ""
+
+  if path:sub(#path, #path) == "/" then
+    path = path:sub(1, #path - 1)
   end
-  return ext
+
+  while path:sub(#path, #path) ~= "/" do
+    file = path:sub(#path, #path) .. file
+    path = path:sub(1, #path - 1)
+  end
+  return file
+end
+
+-- returns true if file matches glob pattern
+M.glob = function(file, glob)
+  while #file > 0 do
+    local glob_char = glob:sub(#glob, #glob)
+    local prev_glob_char = glob:sub(#glob - 1, #glob - 1)
+    local file_char = file:sub(#file, #file)
+    local checking_for = ""
+
+    if glob_char == "*" then checking_for = prev_glob_char
+    else checking_for = glob_char end
+
+    if glob_char == "*" then
+      sub_file = file
+      for _ = #file, 0, -1 do
+        -- prev sub file char
+        local psfc = sub_file:sub(#sub_file - 1, #sub_file - 1)
+        if psfc == checking_for or psfc == "" then
+          file = sub_file
+        end
+        sub_file = sub_file:sub(1, #sub_file - 1)
+      end
+      glob = glob:sub(1, #glob - 1)
+    end
+
+    if glob_char ~= "*" and file_char == checking_for then
+      file = file:sub(1, #file - 1)
+      glob = glob:sub(1, #glob - 1)
+    elseif glob_char ~= "*" and file_char ~= checking_for then
+      return false
+    end
+
+  end
+  return true
 end
 
 -- returns an int of how many characters are different between two strings

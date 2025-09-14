@@ -18,12 +18,12 @@ M.should_add = function(lines)
   return false
 end
 
--- returns header that matches file extension
+-- returns header that matches file name
 -- returns nil if it does not exist
-M.get = function(ext)
+M.get = function(file)
   local headers = config.get().headers
   for _, i in ipairs(headers) do
-    if i.file == ext then return i end
+    if util.glob(file, i.file) then return i end
   end
   return nil
 end
@@ -36,11 +36,11 @@ M.format = function(lines)
   return lines
 end
 
--- inserts header at top of file, given file extension
-M.insert = function(ext)
-  header = M.get(ext)
+-- inserts header at top of file, given file name
+M.insert = function(file)
+  header = M.get(file)
   if header == nil then
-    print("Copied Rights: ERROR: Could not find header for " .. ext)
+    print("Copied Rights: ERROR: Could not find header for " .. file)
     return
   end
 

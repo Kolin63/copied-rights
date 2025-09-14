@@ -19,10 +19,7 @@ M.set_max_search = function(x) config.max_search = x end
 -- neatly adds header to config, and checks for file type conflicts
 -- fast: if conflicting file type checks should be skipped
 M.add_header = function(header, fast)
-  if header.file ~= nil then
-    if header.file:sub(1, 1) == "*" then header.file = header.file:sub(2) end
-    if header.file:sub(1, 1) == "." then header.file = header.file:sub(2) end
-  else
+  if header.file == nil then
     -- without a file type, it is invalid
     print("Copied Rights: ERROR: Header must include a file type")
     goto exception
