@@ -12,7 +12,9 @@ local config = require("copied-rights/config")
 -- setup config
 M.setup = function(input)
   if input.headers ~= nil then
-    for _, header in ipairs(input.headers) do config.add_header(header) end
+    for _, header in ipairs(input.headers) do
+      config.add_header(header, true)
+    end
   end
   if input.search_stop ~= nil then config.set_search_stop(input.search_stop) end
   if input.max_search ~= nil then config.set_max_search(input.max_search) end
