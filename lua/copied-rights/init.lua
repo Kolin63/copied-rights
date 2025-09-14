@@ -45,6 +45,15 @@ M.setup = function(input)
   end
   ::stop_file_search::
 
+  -- make the commands
+  vim.api.nvim_create_user_command("CopiedRights", function(args)
+    local insert = require("copied-rights/header").insert
+    if #args.fargs == 0 then
+      insert(util.get_extension(vim.api.nvim_buf_get_name(0)))
+      -- TODO: add support for commands
+    end
+  end, { nargs = '?' })
+
 end
 
 return M
