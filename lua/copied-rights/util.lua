@@ -9,9 +9,12 @@ local config = require("copied-rights/config")
 -- ex: file.abc.vim will return vim
 M.get_extension = function(file)
   ext = ""
-  while file:sub(#file, #file) ~= "." do
+  while #file > 0 do
     ext = file:sub(#file, #file) .. ext
     file = file:sub(1, #file - 1)
+    if file:sub(#file, #file) == "." then
+      return ext
+    end
   end
   return ext
 end
