@@ -44,7 +44,13 @@ M.insert = function(ext)
     return
   end
 
-  vim.api.nvim_buf_set_lines(0, 0, 0, false, M.format(header.lines))
+  -- format lines
+  local lines = M.format(header.lines)
+
+  local line_end = 0
+  if not M.should_add(lines) then line_end = #lines end
+
+  vim.api.nvim_buf_set_lines(0, 0, line_end, false, lines)
 end
 
 return M
