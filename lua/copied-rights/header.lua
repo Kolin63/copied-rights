@@ -20,10 +20,12 @@ end
 
 -- returns header that matches file name
 -- returns nil if it does not exist
-M.get = function(file)
+M.get = function(file, command)
   local headers = config.get().headers
   for _, i in ipairs(headers) do
-    if util.glob(file, i.file) then return i end
+    if util.glob(file, i.file) and command == i.command then
+      return i
+    end
   end
   return nil
 end
@@ -37,10 +39,12 @@ M.format = function(lines)
 end
 
 -- inserts header at top of file, given file name
-M.insert = function(file)
-  header = M.get(file)
+M.insert = function(file, command)
+  header = M.get(file, command)
   if header == nil then
-    print("Copied Rights: ERROR: Could not find header for " .. file)
+    local msg = file
+    if command ~= nil then msg = msg .. " : " .. command end
+    print("Copied Rights: ERROR: Could not find header for " .. msg)
     return
   end
 

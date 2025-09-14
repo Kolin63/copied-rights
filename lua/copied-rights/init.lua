@@ -52,7 +52,7 @@ M.setup = function(input)
     if #args.fargs == 0 then
       insert(vim.api.nvim_buf_get_name(0))
     else
-      insert(args.fargs[1])
+      insert(vim.api.nvim_buf_get_name(0), args.fargs[1])
     end
   end, { nargs = '?' })
 
