@@ -19,6 +19,9 @@ M.setup = function(input)
   if input.search_stop ~= nil then config.set_search_stop(input.search_stop) end
   if input.max_search ~= nil then config.set_max_search(input.max_search) end
   if input.max_diff ~= nil then config.set_max_diff(input.max_diff) end
+  if input.override_file ~= nil then
+    config.set_override_file(input.override_file)
+  end
 
   -- make the commands
   vim.api.nvim_create_user_command("CopiedRights", function(args)
