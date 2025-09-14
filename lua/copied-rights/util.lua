@@ -16,6 +16,17 @@ M.get_extension = function(file)
   return ext
 end
 
+-- returns an int of how many characters are different between two strings
+M.diff_string = function(x, y)
+  local diff_count = 0
+  for i = 1, math.max(#x, #y) do
+    if x:sub(i, i) ~= y:sub(i, i) then
+      diff_count = diff_count + 1
+    end
+  end
+  return diff_count
+end
+
 -- debug function for printing all headers
 M.debug = function()
   local c = config.get()
