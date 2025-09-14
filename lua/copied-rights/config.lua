@@ -52,5 +52,33 @@ M.add_header = function(header, fast)
   ::exception::
 end
 
+-- finds local file headers and adds them to the config
+M.find_local_files = function()
+  local file_path = ".copied-rights.lua"
+  for search_depth = 0, config.max_search do
+    file = io.open(file_path)
+    if io.type(file) == nil then
+      -- if file is not in this directory, go back one
+      file_path = "../" .. file_path
+    else
+      -- get table from file
+      file_input = dofile(file_path)
+      file:close()
+      -- put table in config
+      for _, i in ipairs(file_input) do M.add_header(i) end
+    end
+
+    -- check for search stop files
+    for _, sfile_path in ipairs(config.search_stop) do
+      sfile = io.open(sfile_path)
+      if io.type(sfile) ~= nil then
+        sfile:close()
+        goto stop_file_search
+      end
+    end
+
+  end
+  ::stop_file_search::
+end
 
 return M
