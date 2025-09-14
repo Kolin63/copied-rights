@@ -43,8 +43,6 @@ M.setup = function(input)
   end
   ::stop_file_search::
 
-  util.debug()
-
 end
 
 return M
