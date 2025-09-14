@@ -77,7 +77,8 @@ M.debug = function()
   end
   print("\n")
 
-  print("max search: " .. c.max_search .. "\n\n")
+  print("max search: " .. c.max_search .. "\n")
+  print("max diff: " .. c.max_diff .. "\n\n")
 
   for _, header in ipairs(c.headers) do
     print("file: " .. header.file)

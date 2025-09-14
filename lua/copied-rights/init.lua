@@ -18,6 +18,7 @@ M.setup = function(input)
   end
   if input.search_stop ~= nil then config.set_search_stop(input.search_stop) end
   if input.max_search ~= nil then config.set_max_search(input.max_search) end
+  if input.max_diff ~= nil then config.set_max_diff(input.max_diff) end
 
   local file_path = ".copied-rights.lua"
   for search_depth = 0, config.get().max_search do
